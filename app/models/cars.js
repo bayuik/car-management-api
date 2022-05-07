@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Cars.init({
     name: DataTypes.STRING,
-    price: DataTypes.STRING,
+    price: DataTypes.INTEGER,
     size: DataTypes.ENUM('small', 'medium', 'large'),
     created_by: DataTypes.STRING,
     updated_by: DataTypes.STRING,
