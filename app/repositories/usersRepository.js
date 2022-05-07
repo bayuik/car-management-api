@@ -10,6 +10,13 @@ module.exports = {
   find(id) {
     return Users.findByPk(id);
   },
+  findOne(value) {
+    return Users.findOne({
+      where: {
+        email: value,
+      },
+    });
+  },
   update(id, value) {
     return Users.update(value, {
       where: {
@@ -21,7 +28,7 @@ module.exports = {
     return Users.destroy({
       where: {
         id,
-      }
+      },
     });
   },
 };

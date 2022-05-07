@@ -15,6 +15,9 @@ module.exports = {
   get(id) {
     return usersRepository.find(id);
   },
+  getByEmail(email){
+    return usersRepository.findOne(email);
+  },
   update(id, requestBody) {
     return usersRepository.update(id, requestBody);
   },

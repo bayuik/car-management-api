@@ -3,31 +3,6 @@ const saltRounds = 10;
 const usersService = require("../../services/usersService");
 
 module.exports = {
-  register(req, res) {
-    const { role, email, password } = req.body;
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      const newUser = {
-        role,
-        email,
-        password: hash,
-      };
-
-      usersService
-        .create(newUser)
-        .then((user) => {
-          res.status(201).json({
-            status: "success",
-            data: user,
-          });
-        })
-        .catch((err) => {
-          res.status(422).json({
-            status: "error",
-            message: err.message,
-          });
-        });
-    });
-  },
   findAll(req, res) {
     usersService
       .list()
