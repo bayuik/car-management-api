@@ -17,13 +17,16 @@ module.exports = {
       size: {
         type: Sequelize.ENUM('small', 'medium', 'large')
       },
-      created_by: {
+      available: {
+        type: Sequelize.BOOLEAN
+      },
+      createdBy: {
         type: Sequelize.STRING
       },
-      updated_by: {
+      updatedBy: {
         type: Sequelize.STRING
       },
-      deleted_by: {
+      deletedBy: {
         type: Sequelize.STRING
       },
       createdAt: {

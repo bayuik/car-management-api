@@ -17,9 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     price: DataTypes.INTEGER,
     size: DataTypes.ENUM('small', 'medium', 'large'),
-    created_by: DataTypes.STRING,
-    updated_by: DataTypes.STRING,
-    deleted_by: DataTypes.STRING
+    available: DataTypes.BOOLEAN,
+    createdBy: DataTypes.STRING,
+    updatedBy: DataTypes.STRING,
+    deletedBy: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Cars',

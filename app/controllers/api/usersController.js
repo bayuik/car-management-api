@@ -1,15 +1,129 @@
+const service = require("../../services/usersService");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const usersService = require("../../services/usersService");
 
-module.exports = {
-  findAll(req, res) {
-    usersService
-      .list()
-      .then((users) => {
+const encryptPassword = (password) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, saltRounds, (err, encryptedPassword) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve(encryptedPassword);
+    });
+  });
+};
+
+const register = async (req, res) => {
+  const role = "member";
+  const { email, password } = req.body;
+  const encryptedPassword = await encryptPassword(password);
+  const newUser = {
+    role,
+    email,
+    password: encryptedPassword,
+  };
+  service
+    .create(newUser)
+    .then((user) => {
+      res.status(201).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((err) => {
+      res.status(422).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const registerAdmin = async (req, res) => {
+  if (req.user.role != "superadmin") {
+    res.status(401).json({
+      status: "Unauthorized",
+      message: "You are not authorized to register an admin",
+    });
+    return;
+  }
+
+  const role = "admin";
+  const { email, password } = req.body;
+  const encryptedPassword = await encryptPassword(password);
+  const newUser = {
+    role,
+    email,
+    password: encryptedPassword,
+  };
+
+  service
+    .create(newUser)
+    .then((user) => {
+      res.status(201).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((err) => {
+      res.status(422).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const getUsers = (req, res) => {
+  service
+    .list()
+    .then((users) => {
+      res.status(200).json({
+        status: "success",
+        data: users,
+      });
+    })
+    .catch((err) => {
+      res.status(422).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const getUser = (req, res) => {
+  service
+    .get(req.params.id)
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((err) => {
+      res.status(422).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+const update = (req, res) => {
+  const { role, email, password } = req.body;
+  const { id } = req.params;
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    const updateUser = {
+      role,
+      email,
+      password: hash,
+    };
+
+    service
+      .update(id, updateUser)
+      .then(() => {
         res.status(200).json({
           status: "success",
-          data: users,
+          message: "User updated successfully",
         });
       })
       .catch((err) => {
@@ -18,44 +132,31 @@ module.exports = {
           message: err.message,
         });
       });
-  },
-  update(req, res) {
-    const { role, email, password } = req.body;
-    const { id } = req.params;
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      const updateUser = {
-        role,
-        email,
-        password: hash,
-      };
+  });
+};
 
-      usersService
-        .update(id, updateUser)
-        .then((user) => {
-          res.status(200).json({
-            status: "success",
-            data: user,
-          });
-        })
-        .catch((err) => {
-          res.status(422).json({
-            status: "error",
-            message: err.message,
-          });
-        });
-    });
-  },
-  delete(req, res) {
-    usersService
-      .delete(req.params.id)
-      .then((user) => {
-        res.status(204).end();
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "error",
-          message: err.message,
-        });
+const deleteUser = (req, res) => {
+  service
+    .deleteUser(req.params.id)
+    .then(() => {
+      res.status(200).json({
+        status: 'success',
+        message: 'User deleted successfully',
       });
-  },
+    })
+    .catch((err) => {
+      res.status(422).json({
+        status: "error",
+        message: err.message,
+      });
+    });
+};
+
+module.exports = {
+  register,
+  registerAdmin,
+  getUsers,
+  getUser,
+  update,
+  deleteUser,
 };
