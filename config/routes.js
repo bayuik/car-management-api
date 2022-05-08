@@ -9,9 +9,7 @@ router.post("/api/register/member", usersController.register);
 router.post("/api/register/admin",authController.authorize, usersController.registerAdmin);
 router.post("/api/login", authController.login);
 
-router.get("/api/users", usersController.getUsers);
 router.route("/api/users/:id")
-  .get(usersController.getUser)
   .put(usersController.update)
   .delete(usersController.deleteUser);
 

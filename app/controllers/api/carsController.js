@@ -28,12 +28,19 @@ const createCar = async (req, res) => {
     available,
     createdBy: email,
   };
-  service.create(newCar).then((car) => {
+  service.create(newCar)
+  .then((car) => {
     res.status(201).json({
       status: "success",
       data: car,
     });
-  });
+  })
+  .catch(err => {
+    res.status(422).json({
+      status: "error",
+      message: err.message,
+    });
+  })
 };
 
 const getCars = (req, res) => {
