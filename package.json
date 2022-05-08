@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "bin/www",
-    "develop": "nodemon bin/www"
+    "start": "node bin/www",
+    "develop": "nodemon bin/www",
+    "db:create": "sequelize db:create",
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "sequelize db:seed:all",
+    "db:drop": "sequelize db:drop",
+    "db:rollback": "sequelize db:migrate:undo"
   },
   "keywords": [],
   "author": "",
