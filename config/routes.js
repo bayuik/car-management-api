@@ -15,11 +15,12 @@ router.route("/api/users/:id")
   .put(usersController.update)
   .delete(usersController.deleteUser);
 
+router.get("/api/user", authController.authorize, usersController.getCurrentUser);
+
+router.get("/api/cars/available", carsController.getAvailableCars);
 router.route("/api/cars")
   .get(authController.authorize,carsController.getCars)
   .post(authController.authorize,carsController.createCar);
-
-router.get("/api/cars/available", carsController.getAvailableCars);
 
 router.route("/api/cars/:id")
   .put(authController.authorize, carsController.updateCar)

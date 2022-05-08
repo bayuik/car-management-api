@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const service = require("../../services/usersService");
-const secretKey = "This is a secret key";
+const secretKey = process.env.SECRET_KEY || "This is a secret key";
 
 const checkPassword = (encryptedPassword, password) => {
   return new Promise((resolve, reject) => {
@@ -10,7 +10,6 @@ const checkPassword = (encryptedPassword, password) => {
         reject(err);
         return;
       }
-
       resolve(isValid);
     });
   });
@@ -64,7 +63,6 @@ const authorize = async (req, res, next) => {
   } catch (err) {
     res.status(401).json({
       status: "Unauthorized",
-      message: err.message
     });
   }
 };

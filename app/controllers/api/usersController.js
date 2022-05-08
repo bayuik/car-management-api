@@ -108,6 +108,13 @@ const getUser = (req, res) => {
     });
 };
 
+const getCurrentUser = (req, res) => {
+  res.status(200).json({
+    status: "success",
+    data: req.user,
+  });
+}
+
 const update = (req, res) => {
   const { role, email, password } = req.body;
   const { id } = req.params;
@@ -157,6 +164,7 @@ module.exports = {
   registerAdmin,
   getUsers,
   getUser,
+  getCurrentUser,
   update,
   deleteUser,
 };
