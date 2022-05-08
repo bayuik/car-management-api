@@ -245,6 +245,22 @@ paths:
           description: Unauthorized
         "422":
           description: Unprocessable Entity
+  /api-docs:
+    get:
+      description: Get swagger ui documents
+      responses:
+        "200":
+          description: Success
+        "500":
+          description: Internal Server Error
+  /api-json:
+    get:
+      description: Get swagger json documents
+      responses:
+        "200":
+          description: Success
+        "500":
+          description: Internal Server Error
 components:
   securitySchemes:
     beaererAuth:

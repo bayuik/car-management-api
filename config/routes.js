@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const controllers = require("../app/controllers");
 const authController = controllers.api.authController;
 const usersController = controllers.api.usersController;
@@ -23,5 +24,9 @@ router.route("/api/cars")
 router.route("/api/cars/:id")
   .put(authController.authorize, carsController.updateCar)
   .delete(authController.authorize, carsController.deleteCar)
+
+router.get("/api/api-json", (req, res) => {
+  res.sendFile(path.join(__dirname, "../swagger.json"));
+})
 
 module.exports = router;
