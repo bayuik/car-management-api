@@ -58,7 +58,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "admin@gmail.com"
+                    "example": "admin@email.com"
                   },
                   "password": {
                     "type": "string",
@@ -93,7 +93,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
-                    "example": "admin@gmail.com"
+                    "example": "admin@email.com"
                   },
                   "password": {
                     "type": "string",
@@ -397,14 +397,54 @@
           }
         }
       }
+    },
+    "/api-docs": {
+      "get": {
+        "description": "Get swagger ui documents",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api-json": {
+      "get": {
+        "description": "Get swagger json documents",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api-yaml": {
+      "get": {
+        "description": "Get swagger yaml documents",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
     "securitySchemes": {
-      "beaererAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      "bearerAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Bearer token"
       }
     }
   }

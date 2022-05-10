@@ -29,4 +29,8 @@ router.get("/api/api-json", (req, res) => {
   res.sendFile(path.join(__dirname, "../swagger.json"));
 })
 
+router.get("/api/api-yaml", (req, res) => {
+  res.sendFile(path.join(__dirname, "../swagger.yaml"));
+})
+
 module.exports = router;

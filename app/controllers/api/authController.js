@@ -56,13 +56,19 @@ const login = async (req, res) => {
 const authorize = async (req, res, next) => {
   try {
     const bearerToken = req.headers.authorization;
-    const token = bearerToken.split("Bearer ")[1];
+    let token = "";
+    if (bearerToken && bearerToken.startsWith("Bearer")) {
+      token = bearerToken.split(" ")[1];
+    } else {
+      token = bearerToken;
+    }
     const tokenPayload = jwt.verify(token, secretKey);
     req.user = await service.get(tokenPayload.id);
     next();
   } catch (err) {
     res.status(401).json({
       status: "Unauthorized",
+      message: err.message,
     });
   }
 };
